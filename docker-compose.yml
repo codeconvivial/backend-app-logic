@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+
+  database:
+    image: postgres
+    container_name: postgres_db
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: codeconvivial
+    ports:
+      - 5432:5432
+    volumes:
+      - codeconvivial_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d codeconvivial"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - 8080:8080
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/codeconvivial
+
+volumes:
+  codeconvivial_db:
+    name: codeconvivial_db
