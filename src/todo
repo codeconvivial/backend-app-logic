@@ -1,3 +1,0 @@
-ensure reload on changes / live reload
-integrate liquibase + hibernate + postgresql
-ensure docker container build on code change in `docker compose up`
