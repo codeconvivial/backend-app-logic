@@ -1,23 +1,24 @@
-#For build
-FROM openjdk:17
+# Base image
+FROM eclipse-temurin:17-jdk-alpine
 
+# Set the working directory
 WORKDIR /app
 
+# Copy the Maven Wrapper files
 COPY mvnw .
-
 COPY .mvn .mvn
 
+# Copy the project configuration files
 COPY pom.xml .
 
-COPY src src
+# Download the project dependencies
+RUN --mount=type=cache,target=/root/.m2 ./mvnw dependency:go-offline -B
 
-RUN ./mvnw package -DskipTests
+# Copy the application source code
+COPY src ./src
 
-COPY target/*.jar app.jar
-
-#For Run
-# FROM openjdk:17
-
+# Expose the container port
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+# Build and run the application as dev
+CMD ["./mvnw", "spring-boot:run"]
