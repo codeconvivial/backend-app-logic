@@ -39,4 +39,5 @@ volumes:
     name: codeconvivial_db
    # have created this volume so that it gets a persistent storage location which can be shared across multiple containers. Over here
    # the purpose of the maven_cache volume is to cache the mvn dependencies so they can be reused across the container runs 
-  maven_cache:
+  maven_cache: 
+    name: maven_cache

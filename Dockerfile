@@ -5,7 +5,7 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 # Copy the Maven Wrapper files
-COPY  ./mvnw ./mvnw
+COPY  ./mvnw .
 COPY .mvn .mvn
 
 # Copy the project configuration files
