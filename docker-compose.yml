@@ -31,7 +31,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/codeconvivial
     volumes:
       - ./src:/app/src
+      - maven_cache:/root/.m2
 
 volumes:
   codeconvivial_db:
     name: codeconvivial_db
+  maven_cache:
